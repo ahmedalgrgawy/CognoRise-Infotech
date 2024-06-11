@@ -1,4 +1,7 @@
 import { useState } from "react"
+import healthy from "./imgs/healthy.png"
+import underweight from './imgs/underweight.png'
+import overweight from './imgs/overweight.png'
 
 function App() {
 
@@ -6,10 +9,45 @@ function App() {
 
   const [hight, setHight] = useState(0)
 
-  const [bmi, setBmi] = useState("")
+  const [bmi, setBmi] = useState('')
 
-  const [msg, setMsg] = useState("")
+  const [msg, setMsg] = useState('')
 
+  const [stateImg, setImgState] = useState(null)
+
+
+  let getBmi = (e) => {
+
+    e.preventDefault()
+
+    if (weight === 0 || hight === 0) {
+      alert('Enter Valid Numbers')
+    } else {
+
+      let bmi = (weight / (hight * hight) * 703)
+
+      console.log(weight);
+
+      console.log(hight);
+
+      console.log(bmi);
+
+      setBmi(bmi.toFixed(1))
+
+      if (bmi < 25) {
+        setMsg('You Are Underweight')
+        setImgState(underweight)
+      } else if (bmi >= 25 && bmi < 30) {
+        setMsg('You Are Normal')
+        setImgState(healthy)
+      } else {
+        setMsg('You Are Overweight')
+        setImgState(overweight)
+      }
+
+    }
+
+  }
 
   return (
     <>
@@ -19,32 +57,38 @@ function App() {
 
           <h1 className="text-center font-bold text-2xl mb-5">Bmi Calculator</h1>
 
-          <form action="">
+          <form onSubmit={getBmi} action="">
             <div>
-              <label>Weight in lbs</label>
-              <input className="w-full text-2xl py-2 px-1 rounded-lg border border-[#333]" type="number" value={weight} />
+              <label>Weight in Lbs</label>
+              <input onChange={(e) => setWight(e.target.value)} className="w-full text-2xl py-2 px-1 rounded-lg border border-[#333]" type="number" value={weight} />
             </div>
 
             <div>
-              <label>Hight in inch</label>
-              <input className="w-full text-2xl py-2 px-1 rounded-lg border border-[#333]" type="number" value={hight} />
+              <label>Hight in Inch</label>
+              <input onChange={(e) => setHight(e.target.value)} className="w-full text-2xl py-2 px-1 rounded-lg border border-[#333]" type="number" value={hight} />
             </div>
 
             <div>
               <button className="btn" type="submit">Submit</button>
-              <button className="btn bg-white text-[#333]" type="submit">Reset</button>
+              <button onClick={() => window.location.reload()} className="btn bg-white text-[#333]">Reload</button>
             </div>
 
           </form>
 
-          <div className="text-center my-[24px] mx-0">
-            <h2 className="text-center font-bold text-xl mb-5">Your Bmi is {bmi}</h2>
-            <p className="my-3 mx-0">{msg}</p>
-          </div>
+          {bmi && (
+            <div>
 
-          <div className="text-center">
-            <img className="h-[200px]" src={state} alt="" />
-          </div>
+              <div className="text-center my-[24px] mx-0">
+                <h2 className="text-center font-bold text-xl mb-5">Your Bmi is {bmi}</h2>
+                <p className="my-3 mx-0">{msg}</p>
+              </div>
+
+              <div className="flex justify-center">
+                <img className={stateImg ? "h-[140px] " : " "} src={stateImg} alt="" />
+              </div>
+
+            </div>
+          )}
 
         </div>
 
