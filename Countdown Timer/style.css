@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.counter {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.time,
+.date-input {
+    display: flex;
+    align-items: center;
+    margin: 20px auto;
+    gap: 15px;
+    justify-content: center;
+}
+
+.unit {
+    border: 1px solid green;
+    border-radius: 6px;
+    text-align: center;
+    width: 75px;
+    background-color: black;
+    transform: 0.3s;
+    padding: 15px;
+    text-align: center;
+}
+
+.time span {
+    display: block;
+    transition: 0.3s;
+    color: white;
+}
